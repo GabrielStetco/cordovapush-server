@@ -1,0 +1,67 @@
+/* style.scss */
+
+$main-color : #E86025;
+$background : white;
+
+//----------------------
+$darkencolor: darken($main-color, 20%);
+$lightencolor: lighten($main-color, 20%);
+h1,h2,h3,h4,h5,h6 {
+    color:$main-color;
+}
+
+h1 {
+    margin-left:40px;
+}
+
+form {
+    background-color:$background;
+    padding:10px;
+}
+
+fieldset {
+    padding:0 20px 20px 20px;
+    margin-bottom:10px;
+    border:1px solid $main-color;
+    box-shadow:1px 1px 1px $main-color;
+}
+
+legend {
+    color:$darkencolor;
+    font-weight:bold
+}
+
+label {
+    margin-top:10px;
+    display:block;
+    color:$lightencolor;
+}
+
+input, textarea {
+    background-color:$background;
+    padding:3px;
+    border:1px solid $main-color;
+    border-radius:5px;
+    width:200px;
+}
+
+input[type=submit] {
+    width:100px;
+    margin-left:5px;
+    box-shadow:1px 1px 1px $main-color;
+    cursor:pointer;
+}
+
+.serverBlock {
+    margin-bottom:20px;
+    color:$darkencolor;
+}
+
+.sendinginfo {
+    margin-bottom:20px;
+    color:$darkencolor;
+}
+
+.serverBlock p {
+    margin:2px;
+}

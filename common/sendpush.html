@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Push Service</title>
+        <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="/lib/styles/github.css">
+        
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-57x57-precomposed.png" />
+        <link rel="apple-touch-startup-image" href="/startup.png">
+        
+        <link href="img/apple-touch-startup-image-320x460.png" media="(device-width: 320px)" rel="apple-touch-startup-image">
+        <link href="img/apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+        <link href="img/apple-touch-startup-image-768x1004.png" media="(device-width: 768px) and (orientation: portrait)" rel="apple-touch-startup-image">
+        <link href="img/apple-touch-startup-image-748x1024.png" media="(device-width: 768px) and (orientation: landscape)" rel="apple-touch-startup-image">
+        <link href="img/apple-touch-startup-image-1536x2008.png" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+        <link href="img/apple-touch-startup-image-1496x2048.png" media="(device-width: 1536px)  and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+        
+        <script src="/lib/jquery-1.7.2-min.js"></script>
+        <script src="/lib/highlight.pack.js"></script>
+        <script src="/lib/bootstrap.js"></script>
+        <script src="/js/common.js"></script>
+        <script>
+                
+        $(document).ready(function() {
+            hljs.initHighlightingOnLoad();
+            
+            jQuery('pre code').html(jQuery('textarea.source').value); 
+            hljs.highlightBlock(jQuery('pre code ')[0],'  ', false);
+            
+            jQuery(document).on('keyup', 'textarea.source', function(event) { 
+                jQuery('pre code').html(this.value); 
+                hljs.highlightBlock(jQuery('pre code ')[0],'  ', false);
+            }); 
+        });
+    
+        
+        
+        </script>
+    </head>
+    
+    <body>
+        <header>
+            <nav>
+                <div class="navbar">
+                  <div class="navbar-inner">
+                    <div class="container">
+                          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand transition" href="/">Push Service</a>
+                        <div class="nav-collapse">
+                            <ul class="nav">
+                              <li class="active"><a href="/send" class="transition"><i class="icon-envelope icon-white"></i> Send</a></li>
+                              <li><a href="/stats" class="transition"><i class="icon-wrench icon-white"></i> Stats</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+            </nav>
+        <header>
+
+        <form class="well form-horizontal" action="" method="POST">
+            <fieldset>
+                <legend>Android</legend>
+                <div class="control-group">
+                    <label class="control-label" for="collapsekey">Collapse Key: </label>
+                    <div class="controls">
+                        <input name="collapsekey" class="input-xlarge" id="collapsekey" type="text" autocapitalize="off" autocorrect="off" placeholder="collapse key"/>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>iOS</legend>
+                <div class="control-group">
+                    <label class="control-label" for="badge">Badge: </label>
+                    <div class="controls">
+                        <input name="badge" class="input-xlarge" id="badge" type="number" min="0" placeholder="0"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="alert">Alert: </label>
+                    <div class="controls">
+                        <input name="alert" class="input-xlarge" id="alert" type="text" placeholder="title"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="sound">Sound: </label>
+                    <div class="controls">
+                        <input name="sound" class="input-xlarge" id="sound" type="text" placeholder="default" autocapitalize="off" autocorrect="off"/>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Common</legend>
+                <div class="control-group">
+                    <label class="control-label" for="payload">Payload: </label>
+                    <div class="controls">
+                        <textarea name="payload" class="source input-xlarge" id="payload" cols="40" rows="10" autocapitalize="off" autocorrect="off" required>
+
+{
+    "title":"title",
+    "message":"message"
+}
+                </textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Preview of payload:</label>
+                    <div class="controls">
+                        <pre class="input-xlarge">
+                            <code>
+{
+    "title":"title",
+    "message":"message"
+}
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+            </fieldset>
+            <input  class="btn btn-large btn-danger" id="sendPush" type="submit" value="Send!"/>
+        </form>
+    </body>
+</html>
