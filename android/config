@@ -15,9 +15,9 @@
  */
  
   var config = {}
-  config.username= "username@gmail.com";
-  config.password="password";
-  config.source= "fr.smile.mobile.cordovapush";
+  config.username= "@gmail.com";
+  config.password="";
+  config.source= "...";
   config.port =  8120;
   config.address= "127.0.0.1";
   config.syslog = false;

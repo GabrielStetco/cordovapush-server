@@ -1,9 +1,9 @@
 var config = {
-  cert: 'cert.pem',                 /* Certificate file path */
+  cert: '.pem',                 /* Certificate file path */
   certData: null,                   /* String or Buffer containing certificate data, if supplied uses this instead of cert file path */
-  key:  'key.pem',                  /* Key file path */
+  key:  '.pem',                  /* Key file path */
   keyData: null,                    /* String or Buffer containing key data, as certData */
-  passphrase: 'passphrase',                 /* A passphrase for the Key file */
+  passphrase: '',                 /* A passphrase for the Key file */
   ca: null,                          /* String or Buffer of CA data to use for the TLS connection */
   gateway: 'gateway.sandbox.push.apple.com',/* gateway address (gateway.push.apple.com for production)*/
   port: 2195,                       /* gateway port */

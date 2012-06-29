@@ -1,5 +1,15 @@
 //Call modules
-var dgram=require('dgram'), http=require('http'), url=require("url"), qs = require('querystring'), mongoose = require('mongoose'), config = require(serversConfig()),fs=require('fs'), pushstats = require('./pushstats');
+var dgram=require('dgram'),
+	http=require('http'),
+	url=require("url"),
+	qs=require('querystring'),
+	mongoose = require('mongoose'),
+	config = require(serversConfig()),
+	fs=require('fs'),
+	pushstats=require('./pushstats'),
+	renderstats=require('./renderstats'),
+	subsc=require('./subscription'),
+	sendu=require('./sendutils');
 
 /**
 * Get the configuration
@@ -68,7 +78,6 @@ function route(pathname,request,response) {
             }catch(e){
                 response.statusCode = 404;
                 response.write(fs.readFileSync("404.html"));
-                console.log("nothing to do for "+request.url);
             }finally{
                 response.end();
             }
@@ -93,94 +102,40 @@ function send(request,response) {
             response.end();
            });
         } else{
-            var formattedData = formatData(data);
-            routingPostData(response,formattedData);
+            routingPostData(response,sendu.format(data));
             response.end();
         }
 	});
 };
 
 /**
-* Format data
-*/
-function formatData(data){
-    if(data.payload){
-        var tmp = JSON.parse(data.payload);
-        data.payload =JSON.stringify(tmp);
-    }
-    return data;
-}
-
-/**
 * Routing data to send messages to the correct(s) server(s)
 */
 function routingPostData(response,data){
-    if(testPropertiesOfData(data,["collapsekey","badge","sound","alert","payload"])){
-        var datas = cutPostData(data,[["collapsekey","payload"],["badge","sound","alert","payload"]]);
-        sendToDevice(createMessage(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel");
-        sendToDevice(createMessage(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel");
+    if(sendu.testFor(data,["collapsekey","badge","sound","alert","payload"])){
+        var datas = sendu.cut(data,[["collapsekey","payload"],["badge","sound","alert","payload"]]);
+        sendToDevice(sendu.create(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel");
+        sendToDevice(sendu.create(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel");
         writeResponseSucessSending(response);
-    } else if(testPropertiesOfData(data,["collapsekey","payload"])){
-        sendToDevice(createMessage(data), config.n2dmport, config.n2dmip, "androidTokenModel");
+    } else if(sendu.testFor(data,["collapsekey","payload"])){
+        sendToDevice(sendu.create(data), config.n2dmport, config.n2dmip, "androidTokenModel");
         writeResponseSucessSending(response);
-    } else if(testPropertiesOfData(data,["badge","sound","alert","payload"])){
-        sendToDevice(createMessage(data), config.n2apnport, config.n2apnip, "iOSTokenModel");
+    } else if(sendu.testFor(data,["badge","sound","alert","payload"])){
+        sendToDevice(sendu.create(data), config.n2apnport, config.n2apnip, "iOSTokenModel");
         writeResponseSucessSending(response);
     }else {
-        response.write(fs.readFileSync("header.html"));
-        response.write('<div class="sendinginfo"><p>data sent failed : invalid arguments!</p></div>');
+        response.write(fs.readFileSync("header-send.html"));
+        response.write('<h1>data sent failed : invalid arguments!</h1>');
         response.write(fs.readFileSync("footer.html"));
     }
-}
-
-/**
-* Cut post data 
-*/
-function cutPostData(data,properties){
-    var datas = new Array();
-    for(i in properties){
-        datas[i] = new Object();
-        for(j in properties[i]){
-            datas[i][properties[i][j]] = data[properties[i][j]];
-        }
-    }
-    return datas;
-}
-
-/**
-* Create the message to send to server
-*/
-function createMessage(data){
-    var messageString ="";
-    var message = new Array();
-    for(var key in data){
-        if(data[key] && data[key]!=""){
-            message.push(data[key]);
-        }
-    }
-    return message.join(":");
-}
-
-/**
-* Test if the data is valid for properties
-*/
-function testPropertiesOfData(data,properties){
-    var boolean = true;
-    for(var property in properties) {
-        if(!(data.hasOwnProperty(properties[property]) && data[properties[property]]!=="")){
-            boolean = false;
-            break;
-        }
-    }
-    return boolean;
 }
 
 /**
 * Write the response for a sucessful sending of message
 */
 function writeResponseSucessSending(response){
-    response.write(fs.readFileSync("header.html"));
-    response.write('<div class="sendinginfo"><p>data has been sent!</p></div>');
+    response.write(fs.readFileSync("header-send.html"));
+    response.write('<h1>data has been sent!</h1>');
     response.write(fs.readFileSync("footer.html"));
 }
 
@@ -196,45 +151,26 @@ function sendToDevice(message, port, ip, model){
         }
         var devicetoken;
         var messageToSend;
-        
         if(tokens.length===0){
-            console.log("no token found");
+            log("no token found");
         } else {
             for (var i = 0; i < tokens.length; i++) {
                 devicetoken = tokens[i];
                 //Preparing the message
                 messageToSend = new Buffer(devicetoken.token+":"+message);
-                //Sending message to node2dm service
+                //Sending message to push service
                 client.send(messageToSend, 0, messageToSend.length, port, ip, function(err, bytes) {
-                    console.log("message sent");
                 });
             }
         }
     });
 };
 
-
 /**
 * Subscribe the device to the push service
 */
 function subscribe(request,response) {
-	var postdata = "";
-	request.addListener("data", function(chunk) {
-		postdata+=chunk;
-	});
-	
-	request.addListener("end", function() {
-		var data = qs.parse(postdata);
-		var dtoken = data.token;
-        var tokenType = data.type;
-        if(tokenType ==="ios"){
-            saveToken("iOSTokenModel",dtoken);
-        }else if (tokenType ==="android"){
-            saveToken("androidTokenModel",dtoken);
-        }else{
-            console.log("missing arg : no token type specified (ios or android)");
-        }
-    });
+	subsc.performAction(request,saveToken);
 	response.end();
 };
 
@@ -242,26 +178,9 @@ function subscribe(request,response) {
 * Unsubscribe the device to the push service
 */
 function unsubscribe(request,response) {
-	var postdata = "";
-	request.addListener("data", function(chunk) {
-		postdata+=chunk;
-	});
-	
-	request.addListener("end", function() {
-		var data = qs.parse(postdata);
-		var dtoken = data.token;
-        var tokenType = data.type;
-        if(tokenType ==="ios"){
-            deleteToken("iOSTokenModel",dtoken);
-        }else if (tokenType ==="android"){
-            deleteToken("androidTokenModel",dtoken);
-        }else{
-            console.log("missing arg : no token type specified (ios or android)");
-        }
-    });
+	subsc.performAction(request,deleteToken);
 	response.end();
 };
-
 
 /**
 * save a token to db
@@ -274,10 +193,7 @@ function saveToken(model, dtoken){
                 if (err) { 
                     throw err; 
                 }
-                console.log('token added: '+dtoken);
             });
-        }else{
-            console.log("already subscribed");
         }
     });
 };
@@ -292,10 +208,7 @@ function deleteToken(model, dtoken){
                 if (err) { 
                     throw err; 
                 }
-                console.log('token removed: '+dtoken);
             });
-        }else{
-            console.log("not subscribed");
         }
     });
 };
@@ -305,48 +218,9 @@ function deleteToken(model, dtoken){
 */
 function stats(request,response) {
 	pushstats.getstats(function(stats){
-	    response.write(fs.readFileSync("header.html"));
-		response.write(renderStats(stats));
+	    response.write(fs.readFileSync("header-stats.html"));
+		response.write(renderstats.render(stats));
 		response.write(fs.readFileSync("footer.html"));
 		response.end();
 	});
 };
-
-/**
-* Render stats in html
-*/
-function renderStats(stats){
-    var parts = parseStats(stats);
-    var htmlStats="";
-    var patt=/\:/g;
-    for(server in parts){
-    htmlStats+="<table class='table-bordered table-striped'><thead><th>Property</th><th>Value</th></thead><tbody>";
-        for(info in parts[server]){
-        if( (parts[server][info].split(patt))[1]!=undefined && (parts[server][info].split(patt))[1]!=null )
-            htmlStats+="<tr><td>"+(parts[server][info].split(patt))[0]+"</td><td>"+(parts[server][info].split(patt))[1]+"</td></tr>";
-        }
-    htmlStats+="</tbody></table><br />";
-    }
-    return htmlStats;
-}
-
-/**
-* Parse the response from debug servers
-*/
-function parseStats(stats){
-    var patt1=/END+\n+/g;
-    var patt2=/\,/g;
-    var parts = new Array();
-    var parts = (stats.split(patt1));
-    var i;
-    var sousparts = new Array();
-    for(i=0; i<parts.length;i++){
-        parts[i]=parts[i].replace(/\n/g, " , ");
-    }
-    for(i=0; i<parts.length;i++){
-        if(parts[i]!=''){
-            sousparts[i]=parts[i].split(patt2);
-        }
-    }
-    return sousparts;
-}

@@ -456,7 +456,6 @@ function C2DMConnection(config) {
 function dbCountUpdate(){
     messagesCountModel.findOne( function (err, doc){
         if(!doc){
-            console.doc("doc not found");
             var messageCount = new messagesCountModel({ total : 1 });
             totalMessagesFromOrigin++;
             messageCount.save(function (err) {
@@ -465,7 +464,6 @@ function dbCountUpdate(){
                 }
             });
         }else{
-            console.log("doc found, "+doc.total);
             totalMessagesFromOrigin++;
             doc.total=totalMessagesFromOrigin;
             doc.save(function (err) {
@@ -487,8 +485,6 @@ fs.stat('quota.lock', function(err, stats) {
         log("Can't start; quota.lock present");
         process.exit(1);
     }
-
     var connection = new C2DMConnection(config);
     var receiver = new C2DMReceiver(config, connection);
 });
-

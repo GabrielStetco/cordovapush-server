@@ -1,4 +1,6 @@
-var net=require('net'), config = require(serversConfig());
+//Call modules
+var net=require('net'),
+	config = require(serversConfig());
 
 //Get config
 function serversConfig() {
@@ -49,7 +51,6 @@ function fork (async_calls, shared_callback) {
   }
 }
 
-
 function getstats(callback){
     function getstatsdm (c){getstatsFromServer("Android",config.n2dmstatport,config.n2dmip,c)};
     function getstatsapn (c){getstatsFromServer("iOS",config.n2apnstatport,config.n2apnip,c)};
@@ -58,5 +59,4 @@ function getstats(callback){
     }
     fork([getstatsdm,getstatsapn],cback);
 };
-
 exports.getstats = getstats;

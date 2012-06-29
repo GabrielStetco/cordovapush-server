@@ -57,17 +57,10 @@ function showErrors(err,notification){
 //Set the callback error function
 config.errorCallback = showErrors;
 
-
-/**
-* Create the schema
-*/
+//Create the schema & model
 var messagesCountSchema = new mongoose.Schema({
 	total : {type: Number,default: '0'}
 });
-
-/**
-* Create the model
-*/
 var messagesCountModel = mongoose.model('APNmessagesCount', messagesCountSchema);
 
 /**
@@ -92,7 +85,6 @@ mongoose.connect(config.mongo, function(err) {
 function dbCountUpdate(){
     messagesCountModel.findOne( function (err, doc){
         if(!doc){
-            console.log("doc not found");
             var messageCount = new messagesCountModel({ total : 1 });
             totalMessagesFromOrigin++;
             messageCount.save(function (err) {
@@ -101,7 +93,6 @@ function dbCountUpdate(){
                 }
             });
         }else{
-            console.log("doc found, "+doc.total);
             totalMessagesFromOrigin++;
             doc.total=totalMessagesFromOrigin;
             doc.save(function (err) {
@@ -117,18 +108,14 @@ function dbCountUpdate(){
 * Initialize the udp client
 */
 function APNReceiver(config, connection) {
-
 	this.server = dgram.createSocket('udp4', function (msg, rinfo) {
-
 		var msgParts = msg.toString().match(/^([^:]+):([^:]+):([^:]+):([^:]+):(.*)$/);
 		if (!msgParts) {
 			log("Invalid message");
 			return;
 		};
 		var token = msgParts[1];
-        console.log(token);
 		var badge = parseInt(msgParts[2]);
-		console.log(badge);
 		var alert = msgParts[3];
 		var sound = msgParts[4];
 		var payload = msgParts[5];
@@ -151,7 +138,7 @@ function APNReceiver(config, connection) {
 /**
 * Initialize the debug server (stats)
 */
-function initializeDebugServer(){
+function startDebugServer(){
     var debugServer = net.createServer(function(stream) {
         stream.setEncoding('ascii');
         stream.on('data', function(data) {
@@ -159,37 +146,28 @@ function initializeDebugServer(){
             var command = commandLine.shift();
             switch (command) {
                 case "help":
-                    stream.write("Commands: stats config\n");
-                    break;
-
-                case "config":
-                    for(var key in config){
-                        stream.write(key+": "+config[key]+" \n");
-                    }     
-                    stream.write("END\n\n");
+                    stream.write("Commands: stats quit\n");
                     break;
 
                 case "stats":
                     var now = Math.round(new Date().getTime() / 1000);
                     var elapsed = now - startupTime;
-
                     stream.write("uptime: " + elapsed + " seconds\n");
                     stream.write("messages_sent_from_origin: " + totalMessagesFromOrigin + "\n");
                     stream.write("messages_sent_since_up: " + totalMessages + "\n");
                     stream.write("messages_in_queue: " + connection.cachedNotifications.length + "\n");
                     stream.write("total_errors: " + totalErrors + "\n");
-
                     var memoryUsage = process.memoryUsage();
                     for (var property in memoryUsage) {
                         stream.write("memory_" + property + ": " + memoryUsage[property] + "\n");
                     }
                     stream.write("END\n\n");
                     break;
-
+                    
                 case "quit":
                     stream.end();
                     break;
-
+                    
                 default:
                     stream.write("Invalid command\n");
                     break;
@@ -209,6 +187,5 @@ function APNConnection(config) {
 // Startup instruction
 var connection = new APNConnection(config);
 var receiver = new APNReceiver(config, connection);
-initializeDebugServer();
-connection.initialize();
+startDebugServer();
 connection.connect();
