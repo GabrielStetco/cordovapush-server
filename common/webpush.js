@@ -9,7 +9,8 @@ var dgram=require('dgram'),
 	pushstats=require('./pushstats'),
 	renderstats=require('./renderstats'),
 	subsc=require('./subscription'),
-	sendu=require('./sendutils');
+	sendu=require('./sendutils'),
+	net=require('net');
 
 /**
 * Get the configuration
@@ -44,6 +45,28 @@ var models={
 * Create UDP client
 */
 var client = dgram.createSocket("udp4");
+
+/**
+* Check if c2dm and apn servers are up and running
+*/
+var c2dmServerIsUp;
+var apnServerIsUp;
+
+var tcpClientC2dm = net.connect(config.n2dmstatport, config.n2dmip, function() {
+    c2dmServerIsUp = true;
+});
+
+var tcpClientApn = net.connect(config.n2apnstatport, config.n2apnport, function() {
+    apnServerIsUp = true;
+});
+	
+tcpClientC2dm.on('error', function() {
+	c2dmServerIsUp = false;
+});
+
+tcpClientApn.on('error', function() {
+	apnServerIsUp = false;
+});
 
 /**
 * Create HTTP server
@@ -96,17 +119,21 @@ function send(request,response) {
 	request.addListener("end", function() {
 		var data = qs.parse(postdata);
         if(postdata===""){
-           fs.readFile('sendpush.html',function(err,data){
-            response.writeHead(200,{'Content-Type':'text/html'});
-            response.write(data);
-            response.end();
+            fs.readFile('sendpush.html', 'utf-8', function(err,data){
+                if(err){
+                    return console.log(err);
+                }
+                response.writeHead(200,{'Content-Type':'text/html'});
+                response.write(data);
+                response.end();
            });
         } else{
             routingPostData(response,sendu.format(data));
-            response.end();
         }
 	});
 };
+
+var parallelizeCounter=1;
 
 /**
 * Routing data to send messages to the correct(s) server(s)
@@ -114,19 +141,19 @@ function send(request,response) {
 function routingPostData(response,data){
     if(sendu.testFor(data,["collapsekey","badge","sound","alert","payload"])){
         var datas = sendu.cut(data,[["collapsekey","payload"],["badge","sound","alert","payload"]]);
-        sendToDevice(sendu.create(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel");
-        sendToDevice(sendu.create(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel");
-        writeResponseSucessSending(response);
+        var parallelize = 2;
+        parallelizeCounter=1;
+        sendToDevice(sendu.create(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel",response, parallelize);
+        sendToDevice(sendu.create(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel",response, parallelize);
     } else if(sendu.testFor(data,["collapsekey","payload"])){
-        sendToDevice(sendu.create(data), config.n2dmport, config.n2dmip, "androidTokenModel");
-        writeResponseSucessSending(response);
+        sendToDevice(sendu.create(data), config.n2dmport, config.n2dmip, "androidTokenModel",response);
     } else if(sendu.testFor(data,["badge","sound","alert","payload"])){
-        sendToDevice(sendu.create(data), config.n2apnport, config.n2apnip, "iOSTokenModel");
-        writeResponseSucessSending(response);
+        sendToDevice(sendu.create(data), config.n2apnport, config.n2apnip, "iOSTokenModel",response);
     }else {
         response.write(fs.readFileSync("header-send.html"));
         response.write('<h1>data sent failed : invalid arguments!</h1>');
         response.write(fs.readFileSync("footer.html"));
+        response.end();
     }
 }
 
@@ -135,14 +162,88 @@ function routingPostData(response,data){
 */
 function writeResponseSucessSending(response){
     response.write(fs.readFileSync("header-send.html"));
-    response.write('<h1>data has been sent!</h1>');
+    response.write('<h1>Data has been sent!</h1>');
+    if(!apnServerIsUp){
+        response.write('<h2>Beware, Node2APN Server is down!</h2>');
+    }
+    if(!c2dmServerIsUp){
+        response.write('<h2>Beware, Node2DM Server is down!</h2>');
+    }
     response.write(fs.readFileSync("footer.html"));
+    response.end();
 }
+
+
 
 /**
 * Send notifications to the speficied device plateform
 */
-function sendToDevice(message, port, ip, model){
+function sendToDevice(message, port, ip, model,response, parallelize){
+
+    if(model=="androidTokenModel"){
+        var successConnectC2dm = function(message, port, ip, model, response, parallelize){
+            return function(){
+              c2dmServerIsUp = true;
+              performSendToDevice(message, port, ip, model);
+              if(!parallelize || parallelize==parallelizeCounter) {
+                writeResponseSucessSending(response);
+              }else{
+                parallelizeCounter++;
+              }
+            }
+        };
+
+        var callbackC2dm = successConnectC2dm(message, port, ip, model,response,parallelize);
+        tcpClientC2dm = net.connect(config.n2dmstatport, config.n2dmip, callbackC2dm);
+        
+        
+        var errorConnectC2dm = function(response, parallelize){
+            return function(){
+              c2dmServerIsUp = false;
+              if(!parallelize || parallelize==parallelizeCounter) {
+                writeResponseSucessSending(response);
+              }else{
+                parallelizeCounter++;
+              }
+            }
+        };
+
+        var errorCallbackC2dm = errorConnectC2dm(response,parallelize);
+        tcpClientC2dm.on('error', errorCallbackC2dm);
+        
+    }else{
+        var successConnectApn = function(message, port, ip, model,response,parallelize){
+            return function(){
+                apnServerIsUp = true;
+                performSendToDevice(message, port, ip, model);
+                if(!parallelize || parallelize==parallelizeCounter) {
+                    writeResponseSucessSending(response);
+                }else{
+                    parallelizeCounter++;
+                }
+            }
+        };
+
+        var callbackApn = successConnectApn(message, port, ip, model,response,parallelize);
+        tcpClientApn = net.connect(config.n2apnstatport, config.n2apnport, callbackApn);
+      
+        var errorConnectApn = function(response, parallelize){
+            return function(){
+               apnServerIsUp = false;
+              if(!parallelize || parallelize==parallelizeCounter) {
+                writeResponseSucessSending(response);
+              }else{
+                parallelizeCounter++;
+              }
+            }
+        };
+
+        var errorCallbackApn = errorConnectApn(response,parallelize);
+        tcpClientApn.on('error', errorCallbackApn);
+    }
+};
+
+function performSendToDevice(message, port, ip, model){
     var query = models[model].find();
     query.limit(100);
     query.exec(function (err, tokens) {
@@ -151,20 +252,25 @@ function sendToDevice(message, port, ip, model){
         }
         var devicetoken;
         var messageToSend;
+        console.log("tokens",tokens);
         if(tokens.length===0){
-            log("no token found");
+            console.log("no token found");
         } else {
             for (var i = 0; i < tokens.length; i++) {
                 devicetoken = tokens[i];
+                console.log("token found: "+devicetoken);
                 //Preparing the message
                 messageToSend = new Buffer(devicetoken.token+":"+message);
                 //Sending message to push service
                 client.send(messageToSend, 0, messageToSend.length, port, ip, function(err, bytes) {
+                    //Nothing can be done here
                 });
             }
         }
     });
-};
+}
+
+
 
 /**
 * Subscribe the device to the push service

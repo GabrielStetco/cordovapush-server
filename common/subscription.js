@@ -5,7 +5,9 @@ var 	qs=require('querystring');
 * Subscribe or unsubscribe the device to the push service
 */
 function performAction(request,action) {
-	chunkData(request,function(data){performSubscriptionAction(data,action)});
+	chunkData(request,function(data){
+	    performSubscriptionAction(data,action);
+	});
 };
 
 /**
@@ -26,13 +28,13 @@ function chunkData(request,callback){
 */
 function performSubscriptionAction(data,action){
 	var dtoken = data.token;
-	var tokenType = data.type;
+    var tokenType = data.type;
 	if(tokenType ==="ios"){
 		action("iOSTokenModel",dtoken);
 	}else if (tokenType ==="android"){
 		action("androidTokenModel",dtoken);
 	}else{
-		log("missing arg : no or wrong token type specified (ios or android)");
+		console.log("missing arg : no or wrong token type specified (ios or android)");
 	}
 };
 
