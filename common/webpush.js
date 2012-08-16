@@ -4,19 +4,19 @@ var dgram=require('dgram'),
 	url=require("url"),
 	qs=require('querystring'),
 	mongoose = require('mongoose'),
-	config = require(serversConfig()),
+	config = require(getConfig()),
 	fs=require('fs'),
 	pushstats=require('./pushstats'),
 	renderstats=require('./renderstats'),
 	subsc=require('./subscription'),
-	sendu=require('./sendutils'),
+	sendutils=require('./sendutils'),
 	net=require('net');
 
 /**
 * Get the configuration
 */
-function serversConfig() {
-	return process.argv[2] ? process.argv[2].replace(/.js$/, '') : './config';
+function getConfig() {
+	return process.argv[2] ? process.argv[2].replace(/.js$/, '') : './config.js';
 };
 
 /**
@@ -128,7 +128,7 @@ function send(request,response) {
                 response.end();
            });
         } else{
-            routingPostData(response,sendu.format(data));
+            routingPostData(response,sendutils.format(data));
         }
 	});
 };
@@ -139,16 +139,16 @@ var parallelizeCounter=1;
 * Routing data to send messages to the correct(s) server(s)
 */
 function routingPostData(response,data){
-    if(sendu.testFor(data,["collapsekey","badge","sound","alert","payload"])){
-        var datas = sendu.cut(data,[["collapsekey","payload"],["badge","sound","alert","payload"]]);
+    if(sendutils.testFor(data,["collapsekey","badge","sound","alert","payload"])){
+        var datas = sendutils.cut(data,[["collapsekey","payload"],["badge","sound","alert","payload"]]);
         var parallelize = 2;
         parallelizeCounter=1;
-        sendToDevice(sendu.create(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel",response, parallelize);
-        sendToDevice(sendu.create(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel",response, parallelize);
-    } else if(sendu.testFor(data,["collapsekey","payload"])){
-        sendToDevice(sendu.create(data), config.n2dmport, config.n2dmip, "androidTokenModel",response);
-    } else if(sendu.testFor(data,["badge","sound","alert","payload"])){
-        sendToDevice(sendu.create(data), config.n2apnport, config.n2apnip, "iOSTokenModel",response);
+        sendToDevice(sendutils.create(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel",response, parallelize);
+        sendToDevice(sendutils.create(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel",response, parallelize);
+    } else if(sendutils.testFor(data,["collapsekey","payload"])){
+        sendToDevice(sendutils.create(data), config.n2dmport, config.n2dmip, "androidTokenModel",response);
+    } else if(sendutils.testFor(data,["badge","sound","alert","payload"])){
+        sendToDevice(sendutils.create(data), config.n2apnport, config.n2apnip, "iOSTokenModel",response);
     }else {
         response.write(fs.readFileSync("header-send.html"));
         response.write('<h1>data sent failed : invalid arguments!</h1>');

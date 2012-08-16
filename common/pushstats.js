@@ -1,10 +1,10 @@
 //Call modules
 var net=require('net'),
-	config = require(serversConfig());
+	config = require(getConfig());
 
 //Get config
-function serversConfig() {
-	return process.argv[2] ? process.argv[2].replace(/.js$/, '') : './config';
+function getConfig() {
+	return process.argv[2] ? process.argv[2].replace(/.js$/, '') : './config.js';
 }
 
 function getstatsFromServer(type,port,ip,callback){

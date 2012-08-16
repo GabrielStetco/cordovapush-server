@@ -1,7 +1,9 @@
+// #!/usr/bin/env node
+
 var dgram = require('dgram'),
 	net = require('net'),
 	config = require(getConfig()),
-	node2dm = require('node2apn-lib');
+	node2dm = require('node2dm-lib');
 
 /**
 * Get config
@@ -15,19 +17,17 @@ function getConfig() {
 */
 function startDgramServer(config, connection) {
 	this.server = dgram.createSocket('udp4', function (msg, rinfo) {
-		var msgParts = msg.toString().match(/^([^:]+):([^:]+):([^:]+):([^:]+):(.*)$/);
+		var msgParts = msg.toString().match(/^([^:]+):([^:]+):(.*)$/);
 		if (!msgParts) {
-			console.log("Invalid message");
+			log("Invalid message");
 			return;
 		};
 		var token = msgParts[1];
-		var badge = parseInt(msgParts[2]);
-		var alert = msgParts[3];
-		var sound = msgParts[4];
-		var payload = msgParts[5];
-		connection.notifyDevice(token, badge, sound, alert, payload);
+		var collapseKey = msgParts[2];
+		var notification = msgParts[3];
+		connection.notifyDevice(token, collapseKey, notification);
 	});
-	this.server.bind(config.lport || 8121);
+	this.server.bind(config.port || 8120);
 }
 
 /**
@@ -59,7 +59,7 @@ function startDebugServer(config,connection){
 			};
 		});
 	});
-	debugServer.listen(config.debugServerPort || config.lport + 100);
+	debugServer.listen(config.debugServerPort || config.port + 100);
 }
 
 /**
