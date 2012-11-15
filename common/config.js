@@ -14,9 +14,9 @@
 var config = {}
 config.mongo="mongodb://localhost/push";
 config.lport="8888";
-config.n2dmip= "localhost";
-config.n2dmport=8120;
-config.n2dmstatport=8220;
+config.n2gcmip= "localhost";
+config.n2gcmport=8120;
+config.n2gcmstatport=8220;
 config.n2apnip= "localhost";
 config.n2apnport = 8121;
 config.n2apnstatport = 8221;

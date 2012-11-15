@@ -52,7 +52,7 @@ function fork (async_calls, shared_callback) {
 }
 
 function getstats(callback){
-    function getstatsdm (c){getstatsFromServer("Android",config.n2dmstatport,config.n2dmip,c)};
+    function getstatsdm (c){getstatsFromServer("Android",config.n2gcmstatport,config.n2gcmip,c)};
     function getstatsapn (c){getstatsFromServer("iOS",config.n2apnstatport,config.n2apnip,c)};
     function cback (result) {
         callback(result[0]+"\n"+result[1]);

@@ -47,21 +47,21 @@ var models={
 var client = dgram.createSocket("udp4");
 
 /**
-* Check if c2dm and apn servers are up and running
+* Check if gcm and apn servers are up and running
 */
-var c2dmServerIsUp;
+var gcmServerIsUp;
 var apnServerIsUp;
 
-var tcpClientC2dm = net.connect(config.n2dmstatport, config.n2dmip, function() {
-    c2dmServerIsUp = true;
+var tcpClientgcm = net.connect(config.n2gcmstatport, config.n2gcmip, function() {
+    gcmServerIsUp = true;
 });
 
 var tcpClientApn = net.connect(config.n2apnstatport, config.n2apnport, function() {
     apnServerIsUp = true;
 });
 	
-tcpClientC2dm.on('error', function() {
-	c2dmServerIsUp = false;
+tcpClientgcm.on('error', function() {
+	gcmServerIsUp = false;
 });
 
 tcpClientApn.on('error', function() {
@@ -144,9 +144,9 @@ function routingPostData(response,data){
         var parallelize = 2;
         parallelizeCounter=1;
         sendToDevice(sendutils.create(datas[1]), config.n2apnport, config.n2apnip, "iOSTokenModel",response, parallelize);
-        sendToDevice(sendutils.create(datas[0]), config.n2dmport, config.n2dmip, "androidTokenModel",response, parallelize);
+        sendToDevice(sendutils.create(datas[0]), config.n2gcmport, config.n2gcmip, "androidTokenModel",response, parallelize);
     } else if(sendutils.testFor(data,["collapsekey","payload"])){
-        sendToDevice(sendutils.create(data), config.n2dmport, config.n2dmip, "androidTokenModel",response);
+        sendToDevice(sendutils.create(data), config.n2gcmport, config.n2gcmip, "androidTokenModel",response);
     } else if(sendutils.testFor(data,["badge","sound","alert","payload"])){
         sendToDevice(sendutils.create(data), config.n2apnport, config.n2apnip, "iOSTokenModel",response);
     }else {
@@ -166,7 +166,7 @@ function writeResponseSucessSending(response){
     if(!apnServerIsUp){
         response.write('<h2>Beware, Node2APN Server is down!</h2>');
     }
-    if(!c2dmServerIsUp){
+    if(!gcmServerIsUp){
         response.write('<h2>Beware, Node2DM Server is down!</h2>');
     }
     response.write(fs.readFileSync("footer.html"));
@@ -181,9 +181,9 @@ function writeResponseSucessSending(response){
 function sendToDevice(message, port, ip, model,response, parallelize){
 
     if(model=="androidTokenModel"){
-        var successConnectC2dm = function(message, port, ip, model, response, parallelize){
+        var successConnectgcm = function(message, port, ip, model, response, parallelize){
             return function(){
-              c2dmServerIsUp = true;
+              gcmServerIsUp = true;
               performSendToDevice(message, port, ip, model);
               if(!parallelize || parallelize==parallelizeCounter) {
                 writeResponseSucessSending(response);
@@ -193,13 +193,13 @@ function sendToDevice(message, port, ip, model,response, parallelize){
             }
         };
 
-        var callbackC2dm = successConnectC2dm(message, port, ip, model,response,parallelize);
-        tcpClientC2dm = net.connect(config.n2dmstatport, config.n2dmip, callbackC2dm);
+        var callbackgcm = successConnectgcm(message, port, ip, model,response,parallelize);
+        tcpClientgcm = net.connect(config.n2gcmstatport, config.n2gcmip, callbackgcm);
         
         
-        var errorConnectC2dm = function(response, parallelize){
+        var errorConnectgcm = function(response, parallelize){
             return function(){
-              c2dmServerIsUp = false;
+              gcmServerIsUp = false;
               if(!parallelize || parallelize==parallelizeCounter) {
                 writeResponseSucessSending(response);
               }else{
@@ -208,8 +208,8 @@ function sendToDevice(message, port, ip, model,response, parallelize){
             }
         };
 
-        var errorCallbackC2dm = errorConnectC2dm(response,parallelize);
-        tcpClientC2dm.on('error', errorCallbackC2dm);
+        var errorCallbackgcm = errorConnectgcm(response,parallelize);
+        tcpClientgcm.on('error', errorCallbackgcm);
         
     }else{
         var successConnectApn = function(message, port, ip, model,response,parallelize){

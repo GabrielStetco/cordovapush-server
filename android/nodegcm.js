@@ -3,7 +3,7 @@
 var dgram = require('dgram'),
 	net = require('net'),
 	config = require(getConfig()),
-	node2dm = require('node2dm-lib');
+	nodegcm = require('node-gcm');
 
 /**
 * Get config
@@ -65,6 +65,6 @@ function startDebugServer(config,connection){
 /**
 * Startup instructions
 */
-var node2dmServer = new node2dm(config);
-startDebugServer(config,node2dmServer);
-startDgramServer(config,node2dmServer);
+var nodegcmServer = new nodegcm.Sender(config);
+startDebugServer(config,nodegcmServer);
+startDgramServer(config,nodegcmServer);
