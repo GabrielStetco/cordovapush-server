@@ -78,7 +78,8 @@ Start server:
 
 ```js
 {
-	port : 8080
+	port : 8080,
+	debug : true
 }
 ```
 
