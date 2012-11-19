@@ -1,38 +1,49 @@
 # Cordova Push
 
 ```js
-var express = require('cordovapush');
-cordovapush.up(config);
+    var express = require('cordovapush');
+    cordovapush.up(config);
 ```
 
 ## Installation
 
+From npm:
 ```shell
     $ npm install -g cordovapush
 ```
 
 ## Quick Start
 
+Start MongoDB:
+```shell
+    $ sudo mongod
+```
+
+Start cordovapush server:
+```shell
+    $ cordovapush
+```
+
 Help:
 ```shell
-    cordovapush --help
+    $ cordovapush --help
 ```
 
 ## From zipball
 
 Install dependencies:
 ```shell
-    npm install
+    $ npm install
 ```
 
 Execution right (if needed):
 ```shell
-    chmod +x ./bin/cordovapush
+    $ chmod +x ./bin/cordovapush
 ```
 
 Start server:
 ```shell
-    ./bin/cordovapush
+    $ ./bin/cordovapush
 ```
 
 ### Config
