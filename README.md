@@ -1,4 +1,4 @@
-# Cordova Push
+# Cordova Push Server
 
 ```js
     var express = require('cordovapush');
