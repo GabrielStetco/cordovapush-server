@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+var cordovapush = require('../lib');
+var config = require('../config/config');
+var path = require('path');
+var commander = require('commander');
+var fs = require('fs');
+var pkg = require('../package.json');
+
+commander
+  .version(pkg.version)
+  .option('-a, --android [path]', 'Path to the android config file')
+  .option('-i, --ios [path]', 'Path to the iOS config file')
+  .option('-w, --web [path]', 'Path to the web server config file')
+  .option('-m, --mongo [path]', 'Path to the mongoDB config file')
+  .parse(process.argv);
+
+var trim = function (string) {
+    return string.replace(/^\s+/g,'').replace(/\s+$/g,'');
+}
+
+var read = function (pwd) {
+    var json = fs.readFileSync(path.join(process.cwd(), pwd), 'utf-8');
+    return trim(json);
+}
+
+if(commander.android) { config.devices.android = read(commander.android) }
+if(commander.ios) { config.devices.ios = read(commander.ios) }
+if(commander.web) { config.web = read(commander.web) }
+if(commander.mongo) { config.mongo = read(commander.mongo) }
+
+cordovapush.up(config);

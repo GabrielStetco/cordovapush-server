@@ -1,25 +1,29 @@
 {
-    "name":"cordovapush-server",
-    "version":"0.1.0",
-    "author": "Smile <pole.mobile@smile.fr>",
-    "description":"Cross-plateform Push Notifications. A project providing servers and cordova plugins to send and receive cross-plateform push notifications.",
-    "keywords":[
-        "cordovapush",
-        "cordova",
-        "phonegap",
-        "push",
-        "apn",
-        "c2dm"
-    ],
-    "dependencies":{
-        "node2apn-lib" : "0.1.x",
-        "node-gcm" : "0.9.x",
-        "mongoose" : "3.4.x",
-        "querystring" : "0.1.x"
-    },
-    "repository":{
-        "type":"git",
-        "url":"git://github.com/smile-mobile/cordovapush.git"
-    },
-    "bugs":"https://github.com/smile-mobile/cordovapush/issues"
+  "name": "cordovapush-server",
+  "version": "0.2.0",
+  "author": "Smile <pole.mobile@smile.fr>",
+  "description": "Cross-plateform Push Notifications. A project providing servers and cordova plugins to send and receive cross-plateform push notifications.",
+  "keywords": [
+    "cordovapush",
+    "cordova",
+    "phonegap",
+    "push",
+    "apn",
+    "c2dm",
+    "gcm"
+  ],
+  "dependencies": {
+    "apn": "1.2.x",
+    "commander": "1.1.x",
+    "express": "3.0.x",
+    "node-gcm": "0.9.x",
+    "mongoose": "3.4.x",
+    "underscore": "1.4.x"
+  },
+  "main" : "./lib/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/smile-mobile/cordovapush.git"
+  },
+  "bugs": "https://github.com/smile-mobile/cordovapush/issues"
 }

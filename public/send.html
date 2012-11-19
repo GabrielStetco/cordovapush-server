@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="/lib/styles/github.css">
-        
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png" />
@@ -13,20 +12,17 @@
         <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png" />
         <link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon-57x57-precomposed.png" />
         <link rel="apple-touch-startup-image" href="/startup.png">
-        
         <link href="img/apple-touch-startup-image-320x460.png" media="(device-width: 320px)" rel="apple-touch-startup-image">
         <link href="img/apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
         <link href="img/apple-touch-startup-image-768x1004.png" media="(device-width: 768px) and (orientation: portrait)" rel="apple-touch-startup-image">
         <link href="img/apple-touch-startup-image-748x1024.png" media="(device-width: 768px) and (orientation: landscape)" rel="apple-touch-startup-image">
         <link href="img/apple-touch-startup-image-1536x2008.png" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
         <link href="img/apple-touch-startup-image-1496x2048.png" media="(device-width: 1536px)  and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
-        
-        <script src="/lib/jquery-1.7.2-min.js"></script>
+        <script src="/lib/jquery-1.8.3.min.js"></script>
         <script src="/lib/highlight.pack.js"></script>
         <script src="/lib/bootstrap.js"></script>
         <script src="/js/common.js"></script>
         <script>
-                
         $(document).ready(function() {
             hljs.initHighlightingOnLoad();
             
@@ -38,12 +34,8 @@
                 hljs.highlightBlock(jQuery('pre code ')[0],'  ', false);
             }); 
         });
-    
-        
-        
         </script>
     </head>
-    
     <body>
         <header>
             <nav>
@@ -58,15 +50,13 @@
                         <div class="nav-collapse">
                             <ul class="nav">
                               <li class="active"><a href="/send" class="transition"><i class="icon-envelope icon-white"></i> Send</a></li>
-                              <li><a href="/stats" class="transition"><i class="icon-wrench icon-white"></i> Stats</a></li>
                             </ul>
                           </div>
                     </div>
                   </div>
                 </div>
             </nav>
-        <header>
-
+        </header>
         <form class="well form-horizontal" action="" method="POST">
             <fieldset>
                 <legend>Android</legend>
@@ -104,7 +94,6 @@
                     <label class="control-label" for="payload">Payload: </label>
                     <div class="controls">
                         <textarea name="payload" class="source input-xlarge" id="payload" cols="40" rows="10" autocapitalize="off" autocorrect="off" required>
-
 {
     "title":"title",
     "message":"message"
