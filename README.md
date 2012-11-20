@@ -1,49 +1,58 @@
 # Cordova Push Server
 
+Cordova Push Server is a cross-plateform push server based on [node-apn](https://github.com/argon/node-apn) and [node-gcm](https://github.com/ToothlessGear/node-gcm).
+
+Cordova Push Server can be called in shell:
+```shell
+$ cordovapush
+```
+
+Or in JavaScript application:
 ```js
-    var express = require('cordovapush');
-    cordovapush.up(config);
+var cordovapush = require('cordovapush');
+cordovapush.up(config);
+}
 ```
 
 ## Installation
 
 From npm:
 ```shell
-    $ npm install -g cordovapush
+$ npm install -g cordovapush
 ```
 
 ### Quick Start
 
 Start MongoDB:
 ```shell
-    $ sudo mongod
+$ sudo mongod
 ```
 
 Start cordovapush server:
 ```shell
-    $ cordovapush
+$ cordovapush
 ```
 
 Help:
 ```shell
-    $ cordovapush --help
+$ cordovapush --help
 ```
 
 ### From zipball
 
 Install dependencies:
 ```shell
-    $ npm install
+$ npm install
 ```
 
 Execution right (if needed):
 ```shell
-    $ chmod +x ./bin/cordovapush
+$ chmod +x ./bin/cordovapush
 ```
 
 Start server:
 ```shell
-    $ ./bin/cordovapush
+$ ./bin/cordovapush
 ```
 
 ## Configuration
