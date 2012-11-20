@@ -1,6 +1,7 @@
 # Cordova Push Server
 
 Cordova Push Server is a cross-plateform push server based on [node-apn](https://github.com/argon/node-apn) and [node-gcm](https://github.com/ToothlessGear/node-gcm). Cordova Push Server currently supports iOS (APN) and android (GCM) platforms.
+
 Cordova Push Server can be called in shell:
 ```shell
 $ cordovapush
