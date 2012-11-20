@@ -192,9 +192,9 @@ Give a path to a [mongoDB configuration file](#mongo).
 
 ## Dependencies
 
-  * [apn](https://github.com/argon/node-apn)
   * [commander](https://github.com/visionmedia/commander.js)
   * [express](https://github.com/visionmedia/express)
+  * [node-apn](https://github.com/argon/node-apn)
   * [node-gcm](https://github.com/ToothlessGear/node-gcm)
   * [mongoose](https://github.com/LearnBoost/mongoose)
   * [underscore](https://github.com/documentcloud/underscore)
