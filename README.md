@@ -11,7 +11,6 @@ Or in a JavaScript application:
 ```js
 var cordovapush = require('cordovapush');
 cordovapush.up(config);
-}
 ```
 
 ## Installation
