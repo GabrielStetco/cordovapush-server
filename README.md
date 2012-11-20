@@ -12,7 +12,7 @@ From npm:
     $ npm install -g cordovapush
 ```
 
-## Quick Start
+### Quick Start
 
 Start MongoDB:
 ```shell
@@ -29,7 +29,7 @@ Help:
     $ cordovapush --help
 ```
 
-## From zipball
+### From zipball
 
 Install dependencies:
 ```shell
@@ -46,10 +46,11 @@ Start server:
     $ ./bin/cordovapush
 ```
 
-### Config
+## Configuration
 
 #### iOS
 
+APN service configuration:
 ```js
 {
 	cert: 'cordovapush.pem',
@@ -65,17 +66,23 @@ Start server:
 	cacheLength: 100
 }
 ```
+See also:
+  + [node-apn documentation](https://github.com/argon/node-apn#connecting)
 
 #### Android
 
+GCM service configuration:
 ```js
 {
-	sender : 'api'
+	sender : 'key api'
 }
 ```
+See also:
+  + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
 
 #### Web
 
+Web server configuration:
 ```js
 {
 	port : 8080,
@@ -85,17 +92,81 @@ Start server:
 
 #### Mongo
 
+MongoDB configuration:
 ```js
 {
 	url : 'mongodb://localhost/cordova'
 }
 ```
 
+##Usage
+
+### Sending interface
+
+```
+    http://localhost:port/send (GET & POST)
+```
+
+### Subscribe
+
+```
+    http://localhost:port/subscribe (POST)
+```
+
+or
+
+
+```
+    http://localhost:port/save (POST)
+```
+
+data:
+```js
+{
+	type : device_type (android || ios),
+	token : device_token
+}
+```
+
+### Unsubscribe
+
+```
+    http://localhost:port/unsubscribe (POST)
+```
+
+or
+
+
+```
+    http://localhost:port/clean (POST)
+```
+
+data:
+```js
+{
+	type : device_type (android || ios),
+	token : device_token
+}
+
+### Alias
+
+```
+    http://localhost:port/alias (POST)
+```
+
+data:
+```js
+{
+	type : device_type (android || ios),
+	token : device_token,
+	alias : alias_name
+}
+
 ## Dependencies
 
-  * apn
-  * commander
-  * express
-  * node-gcm
-  * mongoose
-  * underscore
+  * [apn](https://github.com/argon/node-apn)
+  * [commander](https://github.com/visionmedia/commander.js)
+  * [express](https://github.com/visionmedia/express)
+  * [node-gcm](https://github.com/ToothlessGear/node-gcm)
+  * [mongoose](https://github.com/LearnBoost/mongoose)
+  * [underscore](https://github.com/documentcloud/underscore)
