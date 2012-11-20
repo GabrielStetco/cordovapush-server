@@ -1,5 +1,5 @@
 {
-  "name": "cordovapush-server",
+  "name": "cordovapush",
   "version": "0.2.0",
   "author": "Smile <pole.mobile@smile.fr>",
   "description": "Cross-plateform Push Notifications. A project providing servers and cordova plugins to send and receive cross-plateform push notifications.",
