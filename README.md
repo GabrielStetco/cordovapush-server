@@ -54,6 +54,12 @@ Start server:
 $ ./bin/cordovapush
 ```
 
+### From tarball (github)
+
+Install:
+```shell
+$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.1.tgz
+```
 ## Configuration
 
 #### Android
