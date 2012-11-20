@@ -61,7 +61,7 @@ $ ./bin/cordovapush
 GCM service configuration:
 ```js
 {
-	sender : 'key api'
+	sender : 'api_key'
 }
 ```
   + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
