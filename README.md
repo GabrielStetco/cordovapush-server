@@ -66,7 +66,6 @@ APN service configuration:
 	cacheLength: 100
 }
 ```
-See also:
   + [node-apn documentation](https://github.com/argon/node-apn#connecting)
 
 #### Android
@@ -77,7 +76,6 @@ GCM service configuration:
 	sender : 'key api'
 }
 ```
-See also:
   + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
 
 #### Web
@@ -104,20 +102,20 @@ MongoDB configuration:
 ### Sending interface
 
 ```
-    http://localhost:port/send (GET & POST)
+http://localhost:port/send (GET & POST)
 ```
 
 ### Subscribe
 
 ```
-    http://localhost:port/subscribe (POST)
+http://localhost:port/subscribe (POST)
 ```
 
 or
 
 
 ```
-    http://localhost:port/save (POST)
+http://localhost:port/save (POST)
 ```
 
 data:
@@ -131,14 +129,14 @@ data:
 ### Unsubscribe
 
 ```
-    http://localhost:port/unsubscribe (POST)
+http://localhost:port/unsubscribe (POST)
 ```
 
 or
 
 
 ```
-    http://localhost:port/clean (POST)
+http://localhost:port/clean (POST)
 ```
 
 data:
@@ -147,11 +145,12 @@ data:
 	type : device_type (android || ios),
 	token : device_token
 }
+```
 
 ### Alias
 
 ```
-    http://localhost:port/alias (POST)
+http://localhost:port/alias (POST)
 ```
 
 data:
