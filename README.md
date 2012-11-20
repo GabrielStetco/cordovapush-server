@@ -48,6 +48,16 @@ Start server:
 
 ## Configuration
 
+#### Android
+
+GCM service configuration:
+```js
+{
+	sender : 'key api'
+}
+```
+  + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
+
 #### iOS
 
 APN service configuration:
@@ -67,16 +77,6 @@ APN service configuration:
 }
 ```
   + [node-apn documentation](https://github.com/argon/node-apn#connecting)
-
-#### Android
-
-GCM service configuration:
-```js
-{
-	sender : 'key api'
-}
-```
-  + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
 
 #### Web
 
@@ -102,20 +102,20 @@ MongoDB configuration:
 ### Sending interface
 
 ```
-http://localhost:port/send (GET & POST)
+http://domain:port/send (GET & POST)
 ```
 
 ### Subscribe
 
 ```
-http://localhost:port/subscribe (POST)
+http://domain:port/subscribe (POST)
 ```
 
 or
 
 
 ```
-http://localhost:port/save (POST)
+http://domain:port/save (POST)
 ```
 
 data:
@@ -129,14 +129,14 @@ data:
 ### Unsubscribe
 
 ```
-http://localhost:port/unsubscribe (POST)
+http://domain:port/unsubscribe (POST)
 ```
 
 or
 
 
 ```
-http://localhost:port/clean (POST)
+http://domain:port/clean (POST)
 ```
 
 data:
@@ -150,7 +150,7 @@ data:
 ### Alias
 
 ```
-http://localhost:port/alias (POST)
+http://domain:port/alias (POST)
 ```
 
 data:
@@ -161,6 +161,26 @@ data:
 	alias : alias_name
 }
 ```
+
+## Options
+
+### --android
+
+Give a path to an [android configuration file](#android).
+
+### --ios
+
+Give a path to an [iOS configuration file](#ios).
+
+### --web
+
+Give a path to a [web server configuration file](#web).
+
+### --mongo
+
+Give a path to a [mongoDB configuration file](#mongo).
+
+###
 
 ## Dependencies
 
