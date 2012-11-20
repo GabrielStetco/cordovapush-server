@@ -160,6 +160,7 @@ data:
 	token : device_token,
 	alias : alias_name
 }
+```
 
 ## Dependencies
 
