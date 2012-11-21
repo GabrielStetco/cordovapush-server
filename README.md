@@ -26,7 +26,7 @@ $ sudo mongod
 
 ### From npm repository
 
-From npm:
+Install:
 ```shell
 $ npm install -g cordovapush
 ```
