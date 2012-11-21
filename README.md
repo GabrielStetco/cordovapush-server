@@ -41,7 +41,7 @@ $ cordovapush start
 
 ### From zipball
 
-Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.2.zip).
+Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.0.zip).
 
 Install dependencies:
 ```shell
@@ -60,7 +60,7 @@ $ ./bin/cordovapush start
 
 Install:
 ```shell
-$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.2.tgz
+$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.0.tgz
 ```
 
 Start server:
