@@ -39,7 +39,7 @@ $ cordovapush
 
 ### From zipball
 
-Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.1.zip).
+Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.2.zip).
 
 Install dependencies:
 ```shell
@@ -56,7 +56,7 @@ $ ./bin/cordovapush
 
 Install:
 ```shell
-$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.1.tgz
+$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.2.tgz
 ```
 
 Start server:
@@ -195,8 +195,6 @@ Give a path to a [web server configuration file](#web).
 
 Give a path to a [mongoDB configuration file](#mongo).
 
-###
-
 ## Dependencies
 
   * [commander](https://github.com/visionmedia/commander.js)
@@ -205,3 +203,8 @@ Give a path to a [mongoDB configuration file](#mongo).
   * [node-gcm](https://github.com/ToothlessGear/node-gcm)
   * [mongoose](https://github.com/LearnBoost/mongoose)
   * [underscore](https://github.com/documentcloud/underscore)
+
+
+## History/Changelog
+
+Take a look at the [history](https://github.com/smile-mobile/cordovapush/blob/master/server/HISTORY.md).
