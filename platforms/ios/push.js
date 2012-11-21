@@ -15,7 +15,7 @@ ids = Array of ids
 callback = Callback function
 */
 module.exports.send = function (notif, ids, callback) {
-    var message = JSON.parse(notif.payload), i, l = ids.length, id, device, note;
+    var message = notif.payload, i, l = ids.length, id, device, note;
     note = new apn.Notification();
     note.expiry = Math.floor(Date.now() / 1000) + 3600;
     note.badge = notif.badge;

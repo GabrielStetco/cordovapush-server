@@ -19,7 +19,7 @@ ids = Array of ids
 callback = Callback function
 */
 module.exports.send = function (notif, ids, callback) {
-    var message = JSON.parse(notif.payload),
+    var message = notif.payload,
         note = new gcm.Message(),
         key;
     for (key in message) {

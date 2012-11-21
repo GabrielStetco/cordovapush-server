@@ -1,19 +1,17 @@
 #!/usr/bin/env node
 
-var cordovapush = require('../lib');
-var config = require('../config/config');
-var path = require('path');
-var commander = require('commander');
-var fs = require('fs');
-var pkg = require('../package.json');
+var cordovapush = require('../lib'),
+    fs = require('fs'),
+    path = require('path'),
+    commander = require('commander'),
+    pkg = require('../package.json'),
+    under = require('underscore'),
+    config = {
+        platforms : {},
+        web : require('../config/web.json'),
+        mongo : require('../config/mongo.json')
+    };
 
-commander
-  .version(pkg.version)
-  .option('-a, --android [path]', 'Path to the android config file')
-  .option('-i, --ios [path]', 'Path to the iOS config file')
-  .option('-w, --web [path]', 'Path to the web server config file')
-  .option('-m, --mongo [path]', 'Path to the mongoDB config file')
-  .parse(process.argv);
 
 var trim = function (string) {
     return string.replace(/^\s+/g,'').replace(/\s+$/g,'');
@@ -24,8 +22,26 @@ var read = function (pwd) {
     return trim(json);
 }
 
-if(commander.android) { config.devices.android = read(commander.android) }
-if(commander.ios) { config.devices.ios = read(commander.ios) }
+var ls_platforms = fs.readdirSync(path.join(__dirname, '../config/platforms'));
+for (var index in ls_platforms) {
+    if(ls_platforms.hasOwnProperty(index)){
+        if(ls_platforms[index].split('.').pop() === "json") {
+            config.platforms[under.initial(ls_platforms[index].split('.'))] = require(path.join('../config/platforms', ls_platforms[index]));
+        }
+    }
+}
+
+commander
+  .version(pkg.version)
+  .option('-a, --android [path]', 'Path to the android config file')
+  .option('-i, --ios [path]', 'Path to the iOS config file')
+  .option('-w, --web [path]', 'Path to the web server config file')
+  .option('-m, --mongo [path]', 'Path to the mongoDB config file')
+  .parse(process.argv);
+
+
+if(commander.android) { config.platforms.android = read(commander.android) }
+if(commander.ios) { config.platforms.ios = read(commander.ios) }
 if(commander.web) { config.web = read(commander.web) }
 if(commander.mongo) { config.mongo = read(commander.mongo) }
 
