@@ -41,7 +41,7 @@ $ cordovapush start
 
 ### From zipball
 
-Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.0.zip).
+Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.1.zip).
 
 Install dependencies:
 ```shell
@@ -60,7 +60,7 @@ $ ./bin/cordovapush start
 
 Install:
 ```shell
-$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.0.tgz
+$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.1.tgz
 ```
 
 Start server:
@@ -201,7 +201,7 @@ Start server from current directory.
   * [node-gcm](https://github.com/ToothlessGear/node-gcm)
   * [mongoose](https://github.com/LearnBoost/mongoose)
   * [underscore](https://github.com/documentcloud/underscore)
-
+  * [wrench](https://github.com/ryanmcgrath/wrench-js)
 
 ## History/Changelog
 
