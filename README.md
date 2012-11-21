@@ -15,51 +15,57 @@ cordovapush.up(config);
 
 ## Installation
 
-From npm:
-```shell
-$ npm install -g cordovapush
-```
+### Pre-requisite
 
-### Quick Start
++ MongoDB ([MongoDB Download page](http://www.mongodb.org/downloads)).
 
 Start MongoDB:
 ```shell
 $ sudo mongod
 ```
 
-Start cordovapush server:
+### From npm repository
+
+From npm:
+```shell
+$ npm install -g cordovapush
+```
+
+#### Start server
+
 ```shell
 $ cordovapush
 ```
 
-Help:
-```shell
-$ cordovapush --help
-```
-
 ### From zipball
+
+Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.1.zip)
 
 Install dependencies:
 ```shell
 $ npm install
 ```
 
-Execution right (if needed):
-```shell
-$ chmod +x ./bin/cordovapush
-```
+#### Start server
 
 Start server:
 ```shell
 $ ./bin/cordovapush
 ```
 
-### From tarball (github)
+### From tarball
 
 Install:
 ```shell
 $ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.2.1.tgz
 ```
+
+#### Start server
+
+```shell
+$ cordovapush
+```
+
 ## Configuration
 
 #### Android
@@ -67,7 +73,7 @@ $ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cord
 GCM service configuration:
 ```js
 {
-	sender : 'api_key'
+	sender : 'api_key'                                 /* Your API Key */
 }
 ```
   + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
@@ -77,17 +83,13 @@ GCM service configuration:
 APN service configuration:
 ```js
 {
-	cert: 'cordovapush.pem',
-	certData: null,
-	key:  'cordovapushkey.pem',
-	keyData: null,
-	passphrase: '****',
-	ca: null,
-	gateway: 'gateway.sandbox.push.apple.com',
-	port: 2195,
-	enhanced: true,
-	errorCallback: undefined,
-	cacheLength: 100
+	cert: 'absolute/path/to/the/cordovapush.pem',      /* Certificate file path */
+	key:  'absolute/path/to/the/cordovapushkey.pem',   /* Key file path */
+	passphrase: '****',                                /* Passphrase for the Key file */
+	gateway: 'gateway.sandbox.push.apple.com',         /* Gateway address */
+	port: 2195,                                        /* Gateway port */
+	enhanced: true,                                    /* Enable enhanced format */
+	cacheLength: 100                                   /* Number of notifications to cache */
 }
 ```
   + [node-apn documentation](https://github.com/argon/node-apn#connecting)
@@ -97,8 +99,8 @@ APN service configuration:
 Web server configuration:
 ```js
 {
-	port : 8080,
-	debug : true
+	port : 8080,                                       /* Listening port */
+	debug : true                                       /* Active logging request mode */
 }
 ```
 
@@ -107,7 +109,7 @@ Web server configuration:
 MongoDB configuration:
 ```js
 {
-	url : 'mongodb://localhost/cordova'
+	url : 'mongodb://localhost/cordova'                /* MongoDB URL */
 }
 ```
 
