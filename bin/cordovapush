@@ -26,11 +26,16 @@ commander
   .parse(process.argv);
 
 if (commander.new) {
+	var opts = {
+		preserve: true,
+		inflateSymlinks: true
+	};
     fs.mkdirSync(path.join(process.cwd(), commander.new));
-    wrench.copyDirSyncRecursive(__dirname + '/../resources', path.join(process.cwd(), commander.new) + '/resources'); 
-    wrench.copyDirSyncRecursive(__dirname + '/../config', path.join(process.cwd(), commander.new) + '/config'); 
-    wrench.copyDirSyncRecursive(__dirname + '/../public', path.join(process.cwd(), commander.new) + '/public'); 
-    wrench.copyDirSyncRecursive(__dirname + '/../platforms', path.join(process.cwd(), commander.new) + '/platforms');   
+    wrench.copyDirSyncRecursive(__dirname + '/../resources', path.join(process.cwd(), commander.new) + '/resources', opts);
+    wrench.copyDirSyncRecursive(__dirname + '/../config', path.join(process.cwd(), commander.new) + '/config', opts);
+    wrench.copyDirSyncRecursive(__dirname + '/../public', path.join(process.cwd(), commander.new) + '/public', opts);
+    wrench.copyDirSyncRecursive(__dirname + '/../platforms', path.join(process.cwd(), commander.new) + '/platforms', opts);
+    wrench.copyDirSyncRecursive(__dirname + '/../node_modules', path.join(process.cwd(), commander.new) + '/node_modules', opts);
 } else if (commander.start) {
     config = {
         platforms : {},
