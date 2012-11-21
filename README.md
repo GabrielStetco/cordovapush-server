@@ -34,7 +34,9 @@ $ npm install -g cordovapush
 Start server:
 
 ```shell
-$ cordovapush
+$ cordovapush new [server_name]
+$ cd [server_name]
+$ cordovapush start
 ```
 
 ### From zipball
@@ -49,7 +51,9 @@ $ npm install
 Start server:
 
 ```shell
-$ ./bin/cordovapush
+$ ./bin/cordovapush new [server_name]
+$ cd [server_name]
+$ ./bin/cordovapush start
 ```
 
 ### From tarball
@@ -62,7 +66,9 @@ $ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cord
 Start server:
 
 ```shell
-$ cordovapush
+$ cordovapush new [server_name]
+$ cd [server_name]
+$ cordovapush start
 ```
 
 ## Configuration
@@ -179,21 +185,13 @@ data:
 
 ## Options
 
-### --android
+### new
 
-Give a path to an [android configuration file](#android).
+Create a new server directory.
 
-### --ios
+### start
 
-Give a path to an [iOS configuration file](#ios).
-
-### --web
-
-Give a path to a [web server configuration file](#web).
-
-### --mongo
-
-Give a path to a [mongoDB configuration file](#mongo).
+Start server from current directory.
 
 ## Dependencies
 

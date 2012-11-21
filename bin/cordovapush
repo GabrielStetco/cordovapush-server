@@ -6,11 +6,8 @@ var cordovapush = require('../lib'),
     commander = require('commander'),
     pkg = require('../package.json'),
     under = require('underscore'),
-    config = {
-        platforms : {},
-        web : require('../config/web.json'),
-        mongo : require('../config/mongo.json')
-    };
+    wrench = require('wrench'),
+    config = {};
 
 
 var trim = function (string) {
@@ -22,27 +19,33 @@ var read = function (pwd) {
     return trim(json);
 }
 
-var ls_platforms = fs.readdirSync(path.join(__dirname, '../config/platforms'));
-for (var index in ls_platforms) {
-    if(ls_platforms.hasOwnProperty(index)){
-        if(ls_platforms[index].split('.').pop() === "json") {
-            config.platforms[under.initial(ls_platforms[index].split('.'))] = require(path.join('../config/platforms', ls_platforms[index]));
-        }
-    }
-}
-
 commander
   .version(pkg.version)
-  .option('-a, --android [path]', 'Path to the android config file')
-  .option('-i, --ios [path]', 'Path to the iOS config file')
-  .option('-w, --web [path]', 'Path to the web server config file')
-  .option('-m, --mongo [path]', 'Path to the mongoDB config file')
+  .option('new [server name]', 'Create a new server directory')
+  .option('start', 'Start server from current directory')
   .parse(process.argv);
 
-
-if(commander.android) { config.platforms.android = read(commander.android) }
-if(commander.ios) { config.platforms.ios = read(commander.ios) }
-if(commander.web) { config.web = read(commander.web) }
-if(commander.mongo) { config.mongo = read(commander.mongo) }
-
-cordovapush.up(config);
+if (commander.new) {
+    fs.mkdirSync(path.join(process.cwd(), commander.new));
+    wrench.copyDirSyncRecursive(__dirname + '/../resources', path.join(process.cwd(), commander.new) + '/resources'); 
+    wrench.copyDirSyncRecursive(__dirname + '/../config', path.join(process.cwd(), commander.new) + '/config'); 
+    wrench.copyDirSyncRecursive(__dirname + '/../public', path.join(process.cwd(), commander.new) + '/public'); 
+    wrench.copyDirSyncRecursive(__dirname + '/../platforms', path.join(process.cwd(), commander.new) + '/platforms');   
+} else if (commander.start) {
+    config = {
+        platforms : {},
+        web : require(path.join(process.cwd(), '/config/web.json')),
+        mongo : require(path.join(process.cwd(), '/config/mongo.json'))
+    };
+    var ls_platforms = fs.readdirSync(path.join(process.cwd(), '/config/platforms'));
+    for (var index in ls_platforms) {
+        if(ls_platforms.hasOwnProperty(index)){
+            if(ls_platforms[index].split('.').pop() === "json") {
+                config.platforms[under.initial(ls_platforms[index].split('.'))] = require(path.join(process.cwd(), '/config/platforms')+ '/' + ls_platforms[index]);
+            }
+        }
+    }
+    cordovapush.start(config, process.cwd());
+} else {
+    commander.outputHelp();
+}
