@@ -32,11 +32,6 @@ $ sudo mongod
 
 ```shell
 $ npm install -g cordovapush
-```
-
-Start server:
-
-```shell
 $ cordovapush new [server_name]
 $ cd [server_name]
 $ cordovapush start
@@ -53,7 +48,7 @@ GCM service configuration:
 	sender : 'api_key'                                 /* Your API Key */
 }
 ```
-  + [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html)
+See [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html).
 
 #### iOS
 
@@ -69,7 +64,7 @@ APN service configuration:
 	cacheLength: 100                                   /* Number of notifications to cache */
 }
 ```
-  + [node-apn documentation](https://github.com/argon/node-apn#connecting)
+See [node-apn documentation](https://github.com/argon/node-apn#connecting).
 
 #### Web
 
