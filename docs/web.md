@@ -1,4 +1,4 @@
-[Table of contents](https://github.com/smile-mobile/cordovapush-server/tree/master/server/docs#table-of-contents)
+[Table of contents](https://github.com/smile-mobile/cordovapush-server/tree/master/docs#table-of-contents)
 
 ## web
 
