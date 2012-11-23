@@ -1,6 +1,6 @@
 {
   "name": "cordovapush",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": "Smile <pole.mobile@smile.fr>",
   "description": "Cross-plateform Push Notifications. A project providing servers and cordova plugins to send and receive cross-plateform push notifications.",
   "keywords": [
@@ -27,7 +27,7 @@
   "main": "./lib/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/smile-mobile/cordovapush.git"
+    "url": "git://github.com/smile-mobile/cordovapush-server.git"
   },
-  "bugs": "https://github.com/smile-mobile/cordovapush/issues"
+  "bugs": "https://github.com/smile-mobile/cordovapush-server/issues"
 }
