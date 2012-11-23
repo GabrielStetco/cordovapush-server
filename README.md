@@ -3,11 +3,13 @@
 Cordova Push Server is a cross-plateform push server based on [node-apn](https://github.com/argon/node-apn) and [node-gcm](https://github.com/ToothlessGear/node-gcm). Cordova Push Server currently supports iOS (APN) and android (GCM) platforms.
 
 Cordova Push Server can be called in shell:
+
 ```shell
 $ cordovapush
 ```
 
 Or in a JavaScript application:
+
 ```js
 var cordovapush = require('cordovapush');
 ```
@@ -24,6 +26,7 @@ The documentation is [here](https://github.com/smile-mobile/cordovapush/tree/mas
 + MongoDB ([MongoDB Download page](http://www.mongodb.org/downloads)).
 
 Start MongoDB:
+
 ```shell
 $ sudo mongod
 ```
@@ -43,17 +46,20 @@ $ cordovapush start
 #### Android
 
 GCM service configuration:
-```
+
+```js
 {
 	sender : 'api_key'                                 /* Your API Key */
 }
 ```
+
 See [GCM documentation](http://developer.android.com/guide/google/gcm/gs.html).
 
 #### iOS
 
 APN service configuration:
-```
+
+```js
 {
 	cert: 'absolute/path/to/the/cordovapush.pem',      /* Certificate file path */
 	key:  'absolute/path/to/the/cordovapushkey.pem',   /* Key file path */
@@ -64,12 +70,14 @@ APN service configuration:
 	cacheLength: 100                                   /* Number of notifications to cache */
 }
 ```
+
 See [node-apn documentation](https://github.com/argon/node-apn#connecting).
 
 #### Web
 
 Web server configuration:
-```
+
+```js
 {
 	port : 8080,                                       /* Listening port */
 	debug : true                                       /* Active logging request mode */
@@ -79,7 +87,8 @@ Web server configuration:
 #### Mongo
 
 MongoDB configuration:
-```
+
+```js
 {
 	url : 'mongodb://localhost/cordova'                /* MongoDB URL */
 }
@@ -107,7 +116,8 @@ http://domain:port/save (POST)
 ```
 
 data:
-```
+
+```js
 {
 	type : device_type (android || ios),
 	token : device_token
@@ -128,7 +138,8 @@ http://domain:port/clean (POST)
 ```
 
 data:
-```
+
+```js
 {
 	type : device_type (android || ios),
 	token : device_token
@@ -142,7 +153,8 @@ http://domain:port/alias (POST)
 ```
 
 data:
-```
+
+```js
 {
 	type : device_type (android || ios),
 	token : device_token,
