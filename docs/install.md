@@ -21,16 +21,16 @@ $ npm install -g cordovapush
 
 ### Install from zipball
 
-Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.2.zip).
+Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.3.zip).
 
 Unarchive the zipball.
 
 ```shell
-$ npm install -g cordovapush-server-0.3.2/
+$ npm install -g cordovapush-server-0.3.3/
 ```
 
 ### Install from tarball
 
 ```shell
-$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.2.tgz
+$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.3.tgz
 ```

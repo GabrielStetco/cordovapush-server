@@ -1,4 +1,5 @@
 ## History
+- 0.3.3 : lot of doc fixes
 - 0.3.2 : add docs, 404, redirection and improve web interface (issue #21, issue #22, issue #23)
 - 0.3.1 : copy of node_modules (issue #9) + fix wrench issue
 - 0.3.0 : new and start commands (issue #8)
