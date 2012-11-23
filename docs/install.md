@@ -1,3 +1,5 @@
+[Table of contents](../docs)
+
 ## Installation
 
 ### Pre-requisite

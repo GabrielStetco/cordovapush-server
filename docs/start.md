@@ -1,3 +1,5 @@
+[Table of contents](../docs)
+
 ## Start
 
 ### Start the server

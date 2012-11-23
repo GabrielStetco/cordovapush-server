@@ -1,3 +1,5 @@
+[Table of contents](../docs)
+
 ## New
 
 The new command create a new directory with everything you need to start your cordovapush server.

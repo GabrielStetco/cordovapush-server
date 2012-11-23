@@ -1,3 +1,5 @@
+[Table of contents](../docs)
+
 ## Configuration
 
 Configuration files are located in server_folder/config.
