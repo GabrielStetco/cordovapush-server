@@ -6,7 +6,7 @@
 
 * [Install](https://github.com/smile-mobile/cordovapush/blob/master/server/docs/install.md#install) - Install cordovapush server.
 * [New](https://github.com/smile-mobile/cordovapush/blob/master/server/docs/new.md#new) - Generate a new cordovapush server.
-* [Configure](https://github.com/smile-mobile/cordovapush/blob/master/server/docs/config.md#config) - Configure your cordovapush server.
+* [Config](https://github.com/smile-mobile/cordovapush/blob/master/server/docs/config.md#config) - Configure your cordovapush server.
 * [Start](https://github.com/smile-mobile/cordovapush/blob/master/server/docs/start.md#start) - Start your cordovapush server.
 
 ## Advanced documentation
