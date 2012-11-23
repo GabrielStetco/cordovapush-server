@@ -4,7 +4,7 @@
 
 ### Pre-requisite
 
-+ NodeJS([NodeJS Download page] (http://nodejs.org/download/))
++ NodeJS([NodeJS Download page] (http://nodejs.org/download/)).
 
 + MongoDB ([MongoDB Download page](http://www.mongodb.org/downloads)).
 

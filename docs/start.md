@@ -12,8 +12,8 @@ Cordovapush will not check if:
 + You are really placed in your server directory.
 + Your MongoDB is started.
 
-The web interface is now accessible from:
-http://localhost:8080/send
+The web interface is now accessible from [http://localhost:8080/send](http://localhost:8080/send).
+
 
 ### Start using your server
 
