@@ -10,10 +10,14 @@ $ cordovapush
 Or in a JavaScript application:
 ```js
 var cordovapush = require('cordovapush');
-cordovapush.up(config);
 ```
 
-## Installation
+
+## Documentation
+
+The documentation is [here](docs).
+
+## Quick start
 
 ### Pre-requisite
 
@@ -24,9 +28,8 @@ Start MongoDB:
 $ sudo mongod
 ```
 
-### From npm repository
+### Install & Start
 
-Install:
 ```shell
 $ npm install -g cordovapush
 ```
@@ -39,39 +42,8 @@ $ cd [server_name]
 $ cordovapush start
 ```
 
-### From zipball
 
-Download the [zipball](https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.1.zip).
-
-Install dependencies:
-```shell
-$ npm install
-```
-
-Start server:
-
-```shell
-$ ./bin/cordovapush new [server_name]
-$ cd [server_name]
-$ ./bin/cordovapush start
-```
-
-### From tarball
-
-Install:
-```shell
-$ sudo npm install -g https://github.com/downloads/smile-mobile/cordovapush/cordovapush-server-0.3.1.tgz
-```
-
-Start server:
-
-```shell
-$ cordovapush new [server_name]
-$ cd [server_name]
-$ cordovapush start
-```
-
-## Configuration
+### Configuration
 
 #### Android
 
@@ -118,15 +90,15 @@ MongoDB configuration:
 }
 ```
 
-##Usage
+### Usage
 
-### Sending interface
+#### Sending interface
 
 ```
 http://domain:port/send (GET & POST)
 ```
 
-### Subscribe
+#### Subscribe
 
 ```
 http://domain:port/subscribe (POST)
@@ -147,7 +119,7 @@ data:
 }
 ```
 
-### Unsubscribe
+#### Unsubscribe
 
 ```
 http://domain:port/unsubscribe (POST)
@@ -168,7 +140,7 @@ data:
 }
 ```
 
-### Alias
+#### Alias
 
 ```
 http://domain:port/alias (POST)
@@ -183,13 +155,13 @@ data:
 }
 ```
 
-## Options
+### Options
 
-### new
+#### new
 
 Create a new server directory.
 
-### start
+#### start
 
 Start server from current directory.
 
