@@ -155,7 +155,7 @@ data:
 }
 ```
 
-### Options
+### Commands
 
 #### new
 
@@ -176,7 +176,7 @@ Start server from current directory.
   * [wrench](https://github.com/ryanmcgrath/wrench-js)
 
 ## Downloads
-[Cordovapush Download page](https://github.com/smile-mobile/cordovapush/downloads)
+[Cordovapush Download page](https://github.com/smile-mobile/cordovapush/downloads).
 
 ## History/Changelog
 
