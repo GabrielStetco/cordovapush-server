@@ -15,7 +15,7 @@ var cordovapush = require('cordovapush');
 
 ## Documentation
 
-The documentation is [here](server/docs).
+The documentation is [here](https://github.com/smile-mobile/cordovapush/tree/master/server/docs#table-of-contents).
 
 ## Quick start
 
@@ -48,7 +48,7 @@ $ cordovapush start
 #### Android
 
 GCM service configuration:
-```js
+```
 {
 	sender : 'api_key'                                 /* Your API Key */
 }
@@ -58,7 +58,7 @@ GCM service configuration:
 #### iOS
 
 APN service configuration:
-```js
+```
 {
 	cert: 'absolute/path/to/the/cordovapush.pem',      /* Certificate file path */
 	key:  'absolute/path/to/the/cordovapushkey.pem',   /* Key file path */
@@ -74,7 +74,7 @@ APN service configuration:
 #### Web
 
 Web server configuration:
-```js
+```
 {
 	port : 8080,                                       /* Listening port */
 	debug : true                                       /* Active logging request mode */
@@ -84,7 +84,7 @@ Web server configuration:
 #### Mongo
 
 MongoDB configuration:
-```js
+```
 {
 	url : 'mongodb://localhost/cordova'                /* MongoDB URL */
 }
@@ -112,7 +112,7 @@ http://domain:port/save (POST)
 ```
 
 data:
-```js
+```
 {
 	type : device_type (android || ios),
 	token : device_token
@@ -133,7 +133,7 @@ http://domain:port/clean (POST)
 ```
 
 data:
-```js
+```
 {
 	type : device_type (android || ios),
 	token : device_token
@@ -147,7 +147,7 @@ http://domain:port/alias (POST)
 ```
 
 data:
-```js
+```
 {
 	type : device_type (android || ios),
 	token : device_token,
