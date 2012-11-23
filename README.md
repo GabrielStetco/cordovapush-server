@@ -15,7 +15,7 @@ var cordovapush = require('cordovapush');
 
 ## Documentation
 
-The documentation is [here](docs).
+The documentation is [here](server/docs).
 
 ## Quick start
 
