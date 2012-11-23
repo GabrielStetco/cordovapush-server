@@ -175,6 +175,9 @@ Start server from current directory.
   * [underscore](https://github.com/documentcloud/underscore)
   * [wrench](https://github.com/ryanmcgrath/wrench-js)
 
+## Downloads
+[Cordovapush Download page](https://github.com/smile-mobile/cordovapush/downloads)
+
 ## History/Changelog
 
 Take a look at the [history](https://github.com/smile-mobile/cordovapush/blob/master/server/HISTORY.md).
