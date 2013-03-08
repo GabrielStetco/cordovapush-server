@@ -17,7 +17,7 @@ var cordovapush = require('cordovapush');
 
 ## Documentation
 
-The documentation is [here](https://github.com/smile-mobile/cordovapush-server/tree/master/docs#table-of-contents).
+The documentation is [here](https://github.com/Smile-SA/cordovapush-server/tree/master/docs#table-of-contents).
 
 ## Quick start
 
@@ -183,11 +183,11 @@ Start server from current directory.
   * [wrench](https://github.com/ryanmcgrath/wrench-js)
 
 ## Tags
-[Cordovapush tags](https://github.com/smile-mobile/cordovapush-server/tags).
+[Cordovapush tags](https://github.com/Smile-SA/cordovapush-server/tags).
 
 ## History/Changelog
 
-Take a look at the [history](https://github.com/smile-mobile/cordovapush-server/blob/master/HISTORY.md#history).
+Take a look at the [history](https://github.com/Smile-SA/cordovapush-server/blob/master/HISTORY.md#history).
 
 ## License
 
